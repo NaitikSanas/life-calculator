@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Life Calculator</title>
+  <style>
+    body {
+      font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+      color: #f0ff6a;
+      padding: 0;
+      margin: 40;
+      justify-content: center;
+      align-items: center;
+      align-content: center;
+      background-color: #f36f6f;
+      display: flex;
+    }
+
+    #container {
+        display: flex;
+        flex-direction: column;
+        margin: 10px;
+        padding: 10px;
+        background-color: #ffbbaa;
+        border-radius: 10px;
+        
+    }
+
+    #container2 {
+        display: flex;
+        flex-direction: column;
+        margin: 4px;
+        padding: 4px;
+        background-color: #f8957c;
+        border-radius: 10px;
+        
+    }
+    #main-content {
+        display: flex;
+        flex-direction: row;
+        
+    }
+
+    #results{
+        margin: 10px;
+        background-color: #f7b8a9;
+        padding: 50px;
+        border-radius: 10px;
+    }   
+
+    #container label {
+        margin-right: 50px;
+    }
+    .textbox {
+        background-color: #feffc0;
+        border-radius: 5px;
+        border-color: #ff9277;
+        /* user-select: all; */
+    }
+    .button {
+        background-color: #f6f7a9;
+        border-radius: 5px;
+        width: 100px;
+    }
+  </style>
+<script>
+    function pcent(a,b){
+        return Math.round( (a*100)/b);
+    }
+    function getValue() {
+        let expected_years  = document.getElementById("exp_yrs").value;
+        let work_days       = document.getElementById("work_days").value;
+        let work_hrs        = document.getElementById("work_hrs").value;
+        let sleep_hours     = document.getElementById("sleep_hours").value;
+        let misc_hours      = document.getElementById("misc_hours").value;
+        let dcommute_hours  = document.getElementById("dcommute_hours").value;
+        
+        let total_days          = expected_years * 365;
+        let total_hours         = total_days * 24;
+        let total_work_hours    = work_days * work_hrs * 60;
+        let total_sleep_hours   = total_days * sleep_hours;
+        let total_dcommute_hours= work_days * dcommute_hours * 60;
+        let total_misc_hours    = total_days * misc_hours;
+
+
+        let remaining_free_time = total_hours - (total_work_hours+ total_sleep_hours+total_dcommute_hours+total_misc_hours);
+        let occupied_hours =  (total_work_hours+ total_sleep_hours+total_dcommute_hours+total_misc_hours);
+        let remaining_free_time_percent = (remaining_free_time * 100)/total_hours;
+        let occupied_time_on_things_ooc_percent = 100 - remaining_free_time_percent;
+
+        console.log("processing...");
+        console.log("expected_years:",expected_years    );
+        console.log("work_days     :",work_days         );
+        console.log("work_hrs      :",work_hrs          );
+        console.log("sleep_hours   :",sleep_hours       );
+        console.log("misc_hours    :",misc_hours        );
+        console.log("dcommute_hours:",dcommute_hours    );
+        console.log("total_days:",total_days);
+
+        console.log("total_hours       :",total_hours       );
+        console.log("total_work_hours  :",total_work_hours  );
+        console.log("total_sleep_hours :",total_sleep_hours );
+        console.log("total_dcommute_hours :",total_dcommute_hours );
+        console.log("total_misc_hours :",total_misc_hours );
+        console.log("remaining_free_time :",remaining_free_time );
+        
+        console.log("remaining_free_time_percent:",remaining_free_time_percent);
+        console.log("occupied_time_on_things_ooc_percent:",occupied_time_on_things_ooc_percent);
+
+        document.getElementById("results").style.display = "block";
+        document.getElementById("p1").textContent = "Total hours          : "  + total_hours;
+        document.getElementById("p2").textContent = "Total days           : "  + total_days ;
+        document.getElementById("p3").textContent = "Total work hours     : "  + total_work_hours       +" ("+ pcent(total_work_hours,total_hours)      + "%)" ;
+        document.getElementById("p4").textContent = "Total sleep hours    : "  + total_sleep_hours      +" ("+ pcent(total_sleep_hours,total_hours)     + "%)" ;
+        document.getElementById("p5").textContent = "Total commute hours  : "  + total_dcommute_hours   +" ("+ pcent(total_dcommute_hours,total_hours)  + "%)" ;
+        document.getElementById("p6").textContent = "Total Misc hours     : "  + total_misc_hours       +" ("+ pcent(total_misc_hours ,total_hours)     + "%)" ;
+        document.getElementById("p7").textContent = "Remaining Free hours : "  + remaining_free_time    +" ("+ pcent(remaining_free_time ,total_hours)  + "%)" ;
+        document.getElementById("p8").textContent = "Occupied  hours      : "  + occupied_hours         +" ("+ pcent(occupied_hours ,total_hours)       + "%)" ;
+        if(remaining_free_time > occupied_hours){
+            document.getElementById("evaluation").style.backgroundColor = "rgb(0,255,0)";
+        }
+        else {
+            document.getElementById("evaluation").style.backgroundColor = "rgb(255,0,0)";
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function(){
+        
+        
+    });
+    
+
+</script>
+</head>
+
+<body>
+  <main>
+    <label style="justify-content: center; align-content: center; align-items: center; display: flex;">
+        Life Calculator
+    </label>
+    <div id = "main-content">
+        <div id = "input">
+            <div id = "container">
+                <label>Expected Years (years) : </label>
+                <input id = "exp_yrs" class = "textbox" type="text"  >
+            </div>
+
+            <div id = "container">
+                <label>Work Hours (hr/day)  : </label>
+                <input id = "work_hrs" class = "textbox" type="text"  >
+            </div>
+
+
+            <div id = "container">
+                <label >Work Days (days) : </label>
+                <input id = "work_days" class = "textbox" type="text">
+            </div>
+
+            <div id = "container">
+                <label>Sleep time (hr/day) : </label>
+                <input id = "sleep_hours" class = "textbox" type="text">
+            </div>
+            
+            <div id = "container">
+                <label>Misc. activities time (hr/day)  : </label>
+                <input id = "misc_hours" class = "textbox" type="text"  >
+            </div>
+
+            <div id = "container">
+                <label> Daily Commute time (hr/day)  : </label>
+                <input id = "dcommute_hours" class = "textbox" type="text"  >
+            </div>
+
+            <div id = "container">
+                <button onclick="getValue()" class="button">Get Value</button>
+            </div>
+
+        </div>
+
+        <div  id = "results" style="justify-content: center; align-items: center; align-content: center; display: none; font-size: small; color: rgb(255, 255, 252);">
+            
+            <label style="display: flex; justify-content: center; align-items: center; align-content: center; font-size: larger;"> Results : </label>
+            <div id = "container2"><p style="margin: 10px;" id="p1"></p></div>
+            <div id = "container2"><p style="margin: 10px;" id="p2"></p></div>
+            <div id = "container2"><p style="margin: 10px;" id="p3"></p></div>
+            <div id = "container2"><p style="margin: 10px;" id="p4"></p></div>
+            <div id = "container2"><p style="margin: 10px;" id="p5"></p></div>
+            <div id = "container2"><p style="margin: 10px;" id="p6"></p></div>
+
+            <div id = "evaluation" style="display: flex; background-color: #f0ff6a; border-radius: 10px;">
+            <div ><p style="margin: 10px;" id="p7"></p></div>
+            <div ><p style="margin: 10px;" id="p8"></p></div>
+            </div>
+
+
+        </div>
+    </div>
+
+  </main>
+</body>
+
+</html>
